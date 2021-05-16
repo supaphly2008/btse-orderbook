@@ -1,19 +1,53 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <div id="app"><Orderbook :data="sourceData" v-if="this.sourceData" /></div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+const BTSE_SPOT_WEBSOCKET_URL = "wss://ws.btse.com/ws/spot";
+import Orderbook from "./components/Orderbook";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Orderbook,
+  },
+  data() {
+    return {
+      sourceData: {},
+    };
+  },
+  created() {
+    const ws = new WebSocket(BTSE_SPOT_WEBSOCKET_URL);
+
+    ws.onopen = () => {
+      ws.send(
+        JSON.stringify({
+          op: "subscribe",
+          args: ["orderBookL2Api:ETH-USDT_0"],
+        })
+      );
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      this.sourceData = data.data;
+      // console.log(this.sourceData);
+    };
+
+    ws.onclose = () => {
+      console.log("websocket is closed");
+    };
+
+    ws.onerror = (err) => {
+      console.log("connection error: ", err);
+    };
+  },
+  watch: {
+    buyQuote(val) {
+      console.log("asdf", val);
+    },
+  },
+};
 </script>
 
 <style>
