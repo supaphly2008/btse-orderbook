@@ -1,5 +1,9 @@
 <template>
-  <div id="app"><Orderbook :data="sourceData" v-if="this.sourceData" /></div>
+  <div id="app">
+    <h2>BTSE Order book</h2>
+    <h4>{{ sourceData.symbol }}</h4>
+    <Orderbook :data="sourceData" v-if="sourceData" />
+  </div>
 </template>
 
 <script>
@@ -23,7 +27,7 @@ export default {
       ws.send(
         JSON.stringify({
           op: "subscribe",
-          args: ["orderBookL2Api:ETH-USDT_0"],
+          args: ["orderBookL2Api:BTC-USDT_0"],
         })
       );
     };
@@ -31,7 +35,6 @@ export default {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       this.sourceData = data.data;
-      console.log(this.sourceData);
     };
 
     ws.onclose = () => {
