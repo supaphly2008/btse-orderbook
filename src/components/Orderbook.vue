@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     currency() {
-      return this.data?.currency || "";
+      return this.data.currency || "";
     },
     buyQuoteData() {
       if (!Object.keys(this.data).length) {
@@ -35,7 +35,7 @@ export default {
       }
       // return price, size and total
       let total = 0;
-      return this.data?.buyQuote.slice(0, QUOTE_SIZE).map((q) => {
+      return this.data.buyQuote.slice(0, QUOTE_SIZE).map((q) => {
         const result = {
           ...q,
           quoteTotal: Big(q.size).plus(total).toFixed(4),
