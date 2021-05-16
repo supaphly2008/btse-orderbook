@@ -10,10 +10,8 @@
         v-for="(d, index) in data"
         :key="index"
         :class="{
-          flashBuy:
-            type === orderType.BUY &&
-            oldVal.length &&
-            (d.price !== oldVal[index].price || d.size !== oldVal[index].size),
+          flashBuy: flash(d, index, orderType.BUY),
+          flashSell: flash(d, index, orderType.SELL),
         }"
       >
         <td :class="priceClass">{{ d.price }}</td>
@@ -57,6 +55,16 @@ export default {
       return this.type === ORDER_TYPE.BUY ? "buy-price" : "sell-price";
     },
   },
+  methods: {
+    flash(current, index, type) {
+      return (
+        this.type === type &&
+        this.oldVal.length &&
+        (current.price !== this.oldVal[index].price ||
+          current.size !== this.oldVal[index].size)
+      );
+    },
+  },
   watch: {
     data(val, oldVal) {
       this.oldVal = oldVal;
@@ -84,8 +92,22 @@ export default {
   background-color: rgba(16, 186, 104, 0.12);
 }
 
+.flashSell {
+  animation: flashRedBackground 0.3s;
+}
+
 .flashBuy {
   animation: flashGreenBackground 0.3s;
+}
+
+@keyframes flashRedBackground {
+  0%,
+  100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #fdb8c4;
+  }
 }
 
 @keyframes flashGreenBackground {
