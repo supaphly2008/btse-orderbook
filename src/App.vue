@@ -31,7 +31,7 @@ export default {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       this.sourceData = data.data;
-      // console.log(this.sourceData);
+      console.log(this.sourceData);
     };
 
     ws.onclose = () => {
@@ -41,11 +41,6 @@ export default {
     ws.onerror = (err) => {
       console.log("connection error: ", err);
     };
-  },
-  watch: {
-    buyQuote(val) {
-      console.log("asdf", val);
-    },
   },
 };
 </script>
