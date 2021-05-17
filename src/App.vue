@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h2>BTSE Order book</h2>
-    <h4>{{ sourceData.symbol }}</h4>
+    <h4>{{ sourceData && sourceData.symbol }}</h4>
     <Orderbook :data="sourceData" v-if="sourceData" />
   </div>
 </template>
