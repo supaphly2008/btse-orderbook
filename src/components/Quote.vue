@@ -20,7 +20,7 @@
         <td>{{ d.quoteTotal }}</td>
         <div class="tooltip-text">
           <div>Average Price: {{ averagePrice }}</div>
-          <div>Total Value: {{ (d.price * d.size).toFixed(2) }}</div>
+          <div>Total Value: {{ totalValue(d.price, d.size) }}</div>
         </div>
       </tr>
     </table>
@@ -70,6 +70,9 @@ export default {
       });
 
       return (total / this.quoteSize).toFixed(2);
+    },
+    totalValue() {
+      return (price, size) => (price * size).toFixed(2);
     },
   },
   methods: {
