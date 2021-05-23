@@ -7,6 +7,7 @@
         <th>Total</th>
       </tr>
       <tr
+        class="quote-row"
         v-for="(d, index) in data"
         :key="index"
         :class="{
@@ -17,6 +18,7 @@
         <td :class="priceClass">{{ d.price }}</td>
         <td>{{ d.size }}</td>
         <td>{{ d.quoteTotal }}</td>
+        <span class="tooltip-text">Average Price: {{ averagePrice }}</span>
       </tr>
     </table>
   </div>
@@ -54,6 +56,14 @@ export default {
     priceClass() {
       return this.type === ORDER_TYPE.BUY ? "buy-price" : "sell-price";
     },
+    averagePrice() {
+      let total = 0;
+      this.data.forEach((d) => {
+        total += Number(d.price);
+      });
+
+      return (total / 12).toFixed(2);
+    },
   },
   methods: {
     flash(current, index, type) {
@@ -81,6 +91,28 @@ export default {
 .quote-table tr > th {
   min-width: 100px;
 }
+
+.quote-row {
+  cursor: pointer;
+}
+
+.tooltip-text {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  display: none;
+  margin-left: 10px;
+}
+
+.quote-row:hover .tooltip-text {
+  animation: fadeIn 1s;
+  display: block;
+}
+
 .buy-price {
   color: #03b05c;
 }
@@ -98,6 +130,15 @@ export default {
 
 .flashBuy {
   animation: flashGreenBackground 0.3s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes flashRedBackground {
