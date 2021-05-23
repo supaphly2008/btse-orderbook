@@ -5,12 +5,14 @@
       :data="sellQuoteData"
       :type="orderType.SELL"
       v-if="sellQuoteData"
+      :quoteSize="quoteSize"
     />
     <Quote
       :currency="currency"
       :data="buyQuoteData"
       :type="orderType.BUY"
       v-if="buyQuoteData"
+      :quoteSize="quoteSize"
     />
   </div>
 </template>
@@ -18,7 +20,7 @@
 <script>
 import Big from "big.js";
 import Quote, { ORDER_TYPE } from "./Quote";
-const QUOTE_SIZE = 12;
+const QUOTE_SIZE = 10;
 
 export default {
   name: "Orderbook",
@@ -34,6 +36,7 @@ export default {
   data() {
     return {
       orderType: ORDER_TYPE,
+      quoteSize: QUOTE_SIZE,
     };
   },
   computed: {

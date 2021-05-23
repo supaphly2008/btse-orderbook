@@ -18,7 +18,10 @@
         <td :class="priceClass">{{ d.price }}</td>
         <td>{{ d.size }}</td>
         <td>{{ d.quoteTotal }}</td>
-        <span class="tooltip-text">Average Price: {{ averagePrice }}</span>
+        <div class="tooltip-text">
+          <div>Average Price: {{ averagePrice }}</div>
+          <div>Total Value: {{ d.price * d.size }}</div>
+        </div>
       </tr>
     </table>
   </div>
@@ -45,6 +48,10 @@ export default {
       type: String,
       default: "",
     },
+    quoteSize: {
+      type: Number,
+      require: true,
+    },
   },
   data() {
     return {
@@ -62,7 +69,7 @@ export default {
         total += Number(d.price);
       });
 
-      return (total / 12).toFixed(2);
+      return (total / this.quoteSize).toFixed(2);
     },
   },
   methods: {
@@ -106,6 +113,7 @@ export default {
   z-index: 1;
   display: none;
   margin-left: 10px;
+  text-align: left;
 }
 
 .quote-row:hover .tooltip-text {
