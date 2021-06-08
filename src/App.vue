@@ -27,7 +27,7 @@ export default {
       ws.send(
         JSON.stringify({
           op: "subscribe",
-          args: ["orderBookL2Api:BTC-USDT_0"],
+          args: ["orderBookL2Api:ETH-USDT_0"],
         })
       );
     };
@@ -53,7 +53,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
 }
 </style>
